@@ -1,0 +1,43 @@
+<!-- public/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>Financial Model Template - Purchase</title>
+    <link
+      rel="stylesheet"
+      href="styles.css"
+    />
+    <!-- Stripe JS -->
+    <script src="https://js.stripe.com/v3/"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="product-details">
+        <h1>Advanced Financial Modeling Template</h1>
+        <p class="price">$49.99</p>
+        <ul class="features">
+          <li>Professional-grade Excel financial model</li>
+          <li>Complete forecasting capabilities</li>
+          <li>Built-in sensitivity analysis</li>
+          <li>Ready-to-use formulas and calculations</li>
+        </ul>
+      </div>
+
+      <div class="payment-section">
+        <form id="payment-form">
+          <div id="payment-element">
+            <!-- Stripe.js will insert the payment element here -->
+          </div>
+          <button id="submit">Pay Now</button>
+          <div id="error-message"></div>
+        </form>
+      </div>
+    </div>
+    <script src="client.js"></script>
+  </body>
+</html>

@@ -14,3 +14,12 @@ yarn-error.log
 # Build outputs
 /build
 /dist
+
+# IDE-specific files
+.vscode/
+.idea/
+*.swp
+
+# OS-specific files
+.DS_Store
+Thumbs.db
