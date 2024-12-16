@@ -6,7 +6,7 @@ const app = express();
 // IMPORTANT: Move the webhook route BEFORE other middleware
 // Webhook endpoint (must come first)
 app.post("/webhook", express.raw({ type: "application/json" }), async (req, res) => {
-  const endpointSecret = "whsec_424aba16da5e46e851a1a1d5e7bcdd972a92316dc14295c867e374557a60432b";
+  const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
   let event;
 
   try {
