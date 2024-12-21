@@ -35,11 +35,14 @@ document.querySelector("#payment-form").addEventListener("submit", async (e) => 
   e.preventDefault();
   setLoading(true);
 
+  const emailInput = document.querySelector("#email");
+
   try {
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
         return_url: `${window.location.origin}/success.html`,
+        receipt_email: emailInput.value,
       },
     });
 

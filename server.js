@@ -2,6 +2,8 @@ require("dotenv").config();
 const express = require("express");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const app = express();
+const { Resend } = require("resend");
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 // IMPORTANT: Move the webhook route BEFORE other middleware
 // Webhook endpoint (must come first)
@@ -25,8 +27,24 @@ app.post("/webhook", express.raw({ type: "application/json" }), async (req, res)
     case "payment_intent.succeeded":
       const paymentIntent = event.data.object;
       console.log(`💰 PaymentIntent ${paymentIntent.id} was successful!`);
+
+      try {
+        await resend.emails.send({
+          from: "onboarding@resend.dev", // You'll verify your own domain later
+          to: paymentIntent.receipt_email, // Customer's email from Stripe
+          subject: "Your Financial Model Template",
+          html: `
+                <h1>Thank you for your purchase!</h1>
+                <p>Your download link will be available shortly.</p>
+                <p>Order ID: ${paymentIntent.id}</p>
+            `,
+        });
+        console.log("✉️ Confirmation email sent");
+      } catch (error) {
+        console.error("📫 Email error:", error);
+      }
+
       // TODO: Deliver the file
-      // TODO: Send email confirmation
       // TODO: Store in database
       break;
 
